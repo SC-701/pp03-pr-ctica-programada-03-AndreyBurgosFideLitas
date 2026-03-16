@@ -11,7 +11,7 @@ namespace Vehiculo.Abstracciones.Interfaces.Flujo
     public interface IVehiculoFlujo
     {
         Task<IEnumerable<VehiculoResponse>> ObtenerVehiculos();
-        Task<VehiculoResponse> ObtenerVehiculo(Guid Id);
+        Task<VehiculoDetalle> ObtenerVehiculo(Guid Id);
         Task<Guid> AgregarVehiculo(VehiculoRequest Vehiculo);
         Task<Guid> Editar(Guid Id, VehiculoRequest Vehiculo);
         Task<Guid> Eliminar(Guid Id);

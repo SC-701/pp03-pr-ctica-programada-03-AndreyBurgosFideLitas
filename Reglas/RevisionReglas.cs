@@ -26,12 +26,12 @@ namespace Reglas
 
         private bool ValidarEstado(Revision resultadoRevision)
         {
-            string estadoRevision = _configuracion.ObtenerValor("EstadoRevisionFavorable");
+            string estadoRevision = _configuracion.ObtenerValor("EstadoRevisionSatisfactorio");
             return resultadoRevision.Resultado == estadoRevision;
         }
 
-        public static string ObtenerPeriodoActual() { 
-            return $"{DateTime.Now.Month}/{DateTime.Now.Year}";
+        public static string ObtenerPeriodoActual() {
+            return DateTime.Now.ToString("MM-yyyy");
         }
 
         private static bool ValidarPeriodo(string periodo)

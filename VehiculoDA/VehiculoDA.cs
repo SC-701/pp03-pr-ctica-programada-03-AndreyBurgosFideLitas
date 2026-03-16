@@ -75,10 +75,10 @@ namespace Vehiculo.DA
             return resultadoConsulta;
         }
 
-        public async Task<VehiculoResponse> ObtenerVehiculo(Guid Id)
+        public async Task<VehiculoDetalle> ObtenerVehiculo(Guid Id)
         {
             string query = @"ObtenerVehiculo";
-            var resultadoConsulta = await _sqlConnection.QueryAsync<VehiculoResponse>(query, new { Id = Id });
+            var resultadoConsulta = await _sqlConnection.QueryAsync<VehiculoDetalle>(query, new { Id = Id });
             return resultadoConsulta.FirstOrDefault();
         }
 

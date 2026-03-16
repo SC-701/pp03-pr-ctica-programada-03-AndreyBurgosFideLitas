@@ -17,6 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Reglas\Reglas.csproj" />
+    <ProjectReference Include="..\Servicios\Servicios.csproj" />
     <ProjectReference Include="..\Vehiculo.Abstracciones\Vehiculo.Abstracciones.csproj" />
     <ProjectReference Include="..\Vehiculo.Flujo\Vehiculo.Flujo.csproj" />
     <ProjectReference Include="..\VehiculoDA\Vehiculo.DA.csproj" />

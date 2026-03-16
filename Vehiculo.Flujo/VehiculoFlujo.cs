@@ -1,5 +1,6 @@
 ﻿using Vehiculo.Abstracciones.Interfaces.DA;
 using Vehiculo.Abstracciones.Interfaces.Flujo;
+using Vehiculo.Abstracciones.Interfaces.Reglas;
 using Vehiculo.Abstracciones.Modelos;
 
 namespace Vehiculo.Flujo
@@ -7,10 +8,14 @@ namespace Vehiculo.Flujo
     public class VehiculoFlujo : IVehiculoFlujo
     {
         private readonly IVehiculoDA _vehiculoDA;
+        private readonly IRegistroReglas _registroReglas;
+        private readonly IRevisionReglas _revisionReglas;
 
-        public VehiculoFlujo(IVehiculoDA vehiculoDA)
+        public VehiculoFlujo(IVehiculoDA vehiculoDA, IRevisionReglas revisionReglas, IRegistroReglas registroReglas)
         {
             _vehiculoDA = vehiculoDA;
+            _revisionReglas = revisionReglas;
+            _registroReglas = registroReglas;
         }
 
         public Task<Guid> AgregarVehiculo(VehiculoRequest vehiculo)
@@ -33,9 +38,12 @@ namespace Vehiculo.Flujo
             return _vehiculoDA.ObtenerVehiculos();
         }
 
-        public Task<VehiculoResponse> ObtenerVehiculo(Guid Id)
+        public async Task<VehiculoDetalle> ObtenerVehiculo(Guid Id)
         {
-            return _vehiculoDA.ObtenerVehiculo(Id);
+            var vehiculo = await _vehiculoDA.ObtenerVehiculo(Id);
+            vehiculo.RevisionValida = await _revisionReglas.RevisionEsValida(vehiculo.Placa);
+            vehiculo.RegistroValido = await _registroReglas.VehiculoEstaRegistrado(vehiculo.Placa, vehiculo.CorreoPropietario);
+            return vehiculo;
         }
     }
 }
