@@ -1,4 +1,5 @@
 ﻿using Microsoft.IdentityModel.Clients.ActiveDirectory;
+using System.Diagnostics.CodeAnalysis;
 using System.Text.Json;
 using Vehiculo.Abstracciones.Interfaces.Reglas;
 using Vehiculo.Abstracciones.Interfaces.Servicios;
@@ -24,7 +25,8 @@ namespace Servicios
 
             var servicioRegistro = _httpClient.CreateClient("ServicioRegistro");
             var respuesta = await servicioRegistro.GetAsync(string.Format(endPoint,placa));
-            respuesta.EnsureSuccessStatusCode();
+            if (!respuesta.IsSuccessStatusCode)
+                return null;
             var resultado = await respuesta.Content.ReadAsStringAsync();
             var opciones = new JsonSerializerOptions {PropertyNameCaseInsensitive = true 
             };

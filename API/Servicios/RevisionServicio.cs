@@ -24,7 +24,9 @@ namespace Servicios
 
             var servicioRevision = _httpClient.CreateClient("ServicioRevision");
             var respuesta = await servicioRevision.GetAsync(string.Format(endPoint, placa));
-            respuesta.EnsureSuccessStatusCode();
+
+            if (!respuesta.IsSuccessStatusCode)
+                return null;
             var resultado = await respuesta.Content.ReadAsStringAsync();
             var opciones = new JsonSerializerOptions
             {
